@@ -10,8 +10,31 @@
     <body>
 
     <!--Add a nav bar here -->
+    {% include 'Navbar.html' %}
 
-    <!-- Add reviews as cards -->
+    <h2 class="h1-responsive font-weight-bold text-center my-4">Reviews for {{dealer_name}}</h2>
+    <div class="card-columns container-fluid">
+        <!-- Loops through review_list from context -->
+        {% for review in review_list %}
+        <div class="card" >
+            <!-- Conditionally shows different emoji based on NLU sentiment -->
+            {% if review.sentiment == "positive" %}
+            <img class="card-img-left" style="max-width:7%;" src="{{MEDIA_URL}}/emoji/positive.png"></img>
+            {% elif review.sentiment == "negative" %}
+            <img class="card-img-left" style="max-width:7%;" src="{{MEDIA_URL}}/emoji/negative.png"></img>
+            {% elif review.sentiment == "neutral" %}
+            <img class="card-img-left" style="max-width:7%;" src="{{MEDIA_URL}}/emoji/neutral.png"></img>
+            {% endif %}     
+            <!-- Display card contents: Make, Model, Year, Review -->
+            <div class="card-body">
+                <h5 class="card-title h1-responsive font-weight-bold">{{review.car_make}}, {{review.car_model}}</h5>
+                <h6 class="card-title h2-responsive font-weight-bold">{{review.car_year}}</h6>
+                <p class="card-text h3-responsive">{{review.review}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
 
     </body>
 

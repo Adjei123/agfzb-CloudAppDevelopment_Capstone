@@ -1,16 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
-</head>
-    <body>
-    <!--Add review form here -->
-    </body>
-</html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+
+
+
+ {% include 'Navbar.html' %}
+
+
+
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+        format: 'mm/dd/yyyy'
+        });
+    </script>
+    <h2 class="h1-responsive font-weight-bold text-center my-4">Add Review for {{dealer_name}}</h2>
+    <form class="p-3" action="{% url 'djangoapp:add_review' dealer_id %}" method="POST">
+        {% csrf_token %}
+        <label class="h3-responsive font-weight-bold">Add Review Comment</label>
+        <textarea class="form-control col-md-6" id="content" name="content" rows="2" required></textarea>    
+        <br>
+        <input type="checkbox" name="purchasecheck" id="purchasecheck">
+        <label class="h3-responsive">Has purchased the car from {{dealer_name}}
+            <span class="h3-responsive" style="color: grey">(select purchased car information below if checked)</span>
+        </label>
+        <br>
+        <label class="h3-responsive font-weight-bold">Select your car (model-make-year):</label>
+        <select name="car" id="car" class="form-select" required>
+            {% for car in cars %}
+            <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{car.year}}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label class="h3-responsive font-weight-bold">Select Your Purchase Date:</label>
+        <br>
+        <input class="date-own form-contro col-md-3" type="date" name="purchasedate" id="purchasedate">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+
+{% endblock %}
+            
