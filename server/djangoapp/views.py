@@ -85,7 +85,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "https://us-east.functions.appdomain.cloud/api/v1/web/bf04fca2-7896-4254-9996-ca1dcf1b7359/dealership-package/get-dealership"
+        url = "https://us-east.functions.appdomain.cloud/api/v1/web/-33cf6b1-491f-4699-8b50-6712cc32237e/dealership-package/get-dealership"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
@@ -103,12 +103,12 @@ def get_dealer_details(request,dealer_id):
     context = {}
 
     if request.method == "GET":
-        url = "https://us-east.functions.appdomain.cloud/api/v1/web/bf04fca2-7896-4254-9996-ca1dcf1b7359/dealership-package/get-review"
+        url = "https://us-east.functions.appdomain.cloud/api/v1/web/-33cf6b1-491f-4699-8b50-6712cc32237e/dealership-package/get-review"
         # Get dealers from the URL
         reviews = get_dealer_reviews_from_cf(url, dealer_id)
 
         # Get Dealer name to pass to context
-        dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/bf04fca2-7896-4254-9996-ca1dcf1b7359/dealership-package/get-dealership"
+        dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/-33cf6b1-491f-4699-8b50-6712cc32237e/dealership-package/get-dealership"
         dealer_name = get_dealer_by_id_from_cf(dealer_url, dealer_id).full_name
         
         # Concat all dealer's short name
@@ -134,7 +134,7 @@ def add_review(request, dealer_id):
         dealership_cars = CarModel.objects.filter(dealer_id=dealer_id)
 
         # Get dealership name
-        dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/bf04fca2-7896-4254-9996-ca1dcf1b7359/dealership-package/get-dealership"
+        dealer_url = "https://us-east.functions.appdomain.cloud/api/v1/web/-33cf6b1-491f-4699-8b50-6712cc32237e/dealership-package/get-dealership"
         dealer_name = get_dealer_by_id_from_cf(dealer_url, dealer_id).full_name
 
         # Add dealer_name and cars to context to be used in template display
@@ -144,7 +144,7 @@ def add_review(request, dealer_id):
         return render(request, 'djangoapp/add_review.html', context)
 
     if request.method == "POST":
-        post_url = "https://us-east.functions.appdomain.cloud/api/v1/web/bf04fca2-7896-4254-9996-ca1dcf1b7359/dealership-package/post-review"
+        post_url = "https://us-east.functions.appdomain.cloud/api/v1/web/-33cf6b1-491f-4699-8b50-6712cc32237e/dealership-package/post-review"
         car_id = request.POST["car"]
         car = CarModel.objects.get(pk=car_id)
         review = {
